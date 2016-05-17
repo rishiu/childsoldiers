@@ -1,0 +1,66 @@
+#main{
+  padding-top: 5vh;
+}
+
+.div{
+  display: block;
+}
+
+.main-wrapper-user{
+  float:right;
+}
+
+.main-wrapper-info{
+  float:left;
+}
+
+.main-wrapper-info,.main-wrapper-user{
+  padding-bottom: 15px;
+  min-width: 100vh;
+  clear:both;
+}
+
+#biggie{
+  float:right;
+}
+
+#user{
+  float:right;
+  margin-left: 5px;
+  max-width: 30vh;
+}
+
+#user2{
+  margin-right: 5px;
+  max-width: 30vh;
+}
+
+#info{
+  float:left;
+  max-width: 50vh;
+}
+
+.message-wrapper{
+  clear: both;
+  display: inline-block;
+}
+
+.message{
+  display: inline-block;
+  padding: 20px 30px;
+}
+
+#redHand{
+  height: 5vh;
+  float:left;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+body{
+  font-family: 'Roboto Condensed',serif;
+}
+
+nav{
+  background: transparent;
+}
