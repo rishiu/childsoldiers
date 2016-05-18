@@ -1,13 +1,20 @@
 var easterNihar=0;
+var lastLeftName="";
+var lastRightName="";
 
 //document.ready handler
 $(document).ready(function(){
+  //var xmlHttp = new XMLHttpRequest();
+  $.getJSON('http://whateverorigin.org/get?url=' + encodeURIComponent('https://intense-shelf-88812.herokuapp.com/accept') + '&callback=?', function(data){
+  });
+  //xmlHttp.open( "GET", "http://cors.io/?u=https://intense-shelf-88812.herokuapp.com/accept", false );
+  //xmlHttp.send(null);
   //instructions
   window.confirm("To use this website, just act like its a chat application. Read the info on the left and choose your response on the right!")
   //get the ball rolling
   setTimeout(function(){
     addEaster("Hey! Welcome to this website that will hopefully teach you new things about child soldiers.");
-    injectTwoInput("COOL!","Yea...I'm not really feelin' it");
+    injectTwoInput("COOL!","Yea...I am not really feeling it");
     },500);
 });
 
@@ -28,35 +35,62 @@ function injectInfo(text){
 function injectTwoInput(text,text2){
   $('#main').append("<div class='main-wrapper-user'>"+
     "<div class='main-message-wrapper' id='biggie'>"+
-      "<div class='grey message-wrapper' id='user' name='"+(text.toString())+"' onclick='changeColor(this)'>"+
+      "<div class='grey message-wrapper' id='user' name='"+(text.toString())+"' >"+
         "<div class='message'>"+(text.toString())+"</div>"+
       "</div>"+
-      "<div class='grey message-wrapper' id='user2' name=''"+(text2.toString())+"' onclick='changeColor(this)'>"+
+      "<div class='grey message-wrapper' id='user2' name='"+(text2.toString())+"' >"+
         "<div class='message'>"+(text2.toString())+"</div>"+
       "</div>"+
     "</div>"+
   "</div>");
   //more genius
   $('[name="'+(text.toString())+'"]').hide().fadeIn("slow");
+  lastRightName=text.toString();
   $('[name="'+(text2.toString())+'"]').hide().fadeIn("slow");
+  lastLeftName=text2.toString();
+  setTimeout(theComplicatedStuff,20000);
 }
 
 //when theres only one choice. it feels just like voting in communist china
 function injectUnoInput(text){
   $('#main').append("<div class='main-wrapper-user'>"+
-      "<div class='grey message-wrapper fadeIn' name="+(text.toString())+" id='user' onclick='changeColor(this)'>"+
+      "<div class='grey message-wrapper fadeIn' name='"+(text.toString())+"' id='user' >"+
         "<div class='message'>"+(text.toString())+"</div>"+
       "</div>"+
   "</div>");
   $('[name="'+(text.toString())+'"]').hide().fadeIn("slow");
+  lastRightName = text.toString();
+  setTimeout(theComplicatedStuff,20000);
 }
 
 //changes color on click and also sets the ball rolling for future choices
-function changeColor(element){
-  $(element).switchClass('grey','blue');
-  var x = element.innerHTML.toString();
-  x = x.substring(x.indexOf(">")+1,x.indexOf("</"));
-  parsyMcParseFace(x);
+function theComplicatedStuff(){
+  console.log("called")
+  $.getJSON('http://whateverorigin.org/get?url=' + encodeURIComponent('https://intense-shelf-88812.herokuapp.com') + '&callback=?', function(data){
+    var element;
+    if(data.contents==='right'){
+      console.log("eeee")
+      console.log(lastRightName);
+      element = $('[name="'+lastRightName+'"]');
+    }else{
+      console.log(lastLeftName)
+      element = $('[name="'+lastLeftName+'"]');
+    }
+    console.log(element)
+    element.switchClass('grey','blue');
+    var x = element.html();
+    console.log(element.html())
+    x = x.substring(x.indexOf(">")+1,x.indexOf("</"));
+    parsyMcParseFace(x);
+    $.getJSON('http://whateverorigin.org/get?url=' + encodeURIComponent('https://intense-shelf-88812.herokuapp.com/accept') + '&callback=?', function(data){
+
+    });
+  });
+  /*var xmlHttp = new XMLHttpRequest();
+  xmlHttp.open( "GET", "http://cors.io/?u=https://intense-shelf-88812.herokuapp.com", false );
+  xmlHttp.send(null);
+  console.log(xmlHttp.responseText);*/
+
 }
 
 //this name is gold
@@ -196,7 +230,7 @@ var theWholeConversation = { //legit the whole entire thing its like 200 lines l
       content:"Hey! Welcome this website that will hopefully teach you new things about child soldiers."
     }],
     responses:[{
-      content:"Yea...I'm not really feelin' it",
+      content:"Yea...I am not really feeling it",
       id: "sucks"
     },{
       content:"COOL!",
@@ -227,7 +261,7 @@ var theWholeConversation = { //legit the whole entire thing its like 200 lines l
   },
   getStarted:{
     info:[{
-      content: "OK then! Let's start with some background"
+      content: "OK then! Let us start with some background"
     }],
     responses:[{
       content:"How widespread of a problem is this issue child soldiers?",
@@ -241,7 +275,7 @@ var theWholeConversation = { //legit the whole entire thing its like 200 lines l
     info:[{
       content: "There are over 300,000 child soldiers in over 20 countries across 4 continents."
     },{
-      content: "Yeah, It's a pretty big deal."
+      content: "Yeah, It is a pretty big deal."
     }],
     responses:[{
       content:"Darn! Life as a child soldier must suck.",
@@ -282,10 +316,10 @@ var theWholeConversation = { //legit the whole entire thing its like 200 lines l
     info:[{
       content: "Children are considered more effective than the average soldier because they follow authority."
     },{
-      content: "They also don't prioritize payment and are way less likely to desert"
+      content: "They also do not prioritize payment and are way less likely to desert"
     }],
     responses:[{
-      content: "That's sad. But how does this all affect me?",
+      content: "That is sad. But how does this all affect me?",
       id: "whyCare"
     }]
   },
@@ -302,7 +336,7 @@ var theWholeConversation = { //legit the whole entire thing its like 200 lines l
       content: "(scroll up a little)"
     }],
     responses:[{
-      content: "But doesn't this just change the society in Africa? I'm way over here in CPT man.",
+      content: "But does not this just change the society in Africa? I am way over here in CPT man.",
       id: "farAway"
     },{
       content: "I see what you mean. Do you have any examples?",
@@ -327,10 +361,10 @@ var theWholeConversation = { //legit the whole entire thing its like 200 lines l
       content: "If less children become child soldiers, the chances of finding another great leader, innovator and world changer are greatly increased."
     }],
     responses:[{
-      content:"You're spouting some serious wisdom buddy.",
+      content:"You are spouting some serious wisdom buddy.",
       id: "imABeast"
     },{
-      content:"I guess that kinda make sense. But how else are you helping out? This ... mediocre website can't be all",
+      content:"I guess that kinda make sense. But how else are you helping out? This ... mediocre website can not be all",
       id: "plan"
     }]
   },
@@ -339,25 +373,25 @@ var theWholeConversation = { //legit the whole entire thing its like 200 lines l
       content: "YES! Finally some one gets it. Wanna see how else I plan to help out?"
     }],
     responses:[{
-      content: "I'm for it",
+      content: "I am for it",
       id: "plan"
     }]
   },
   plan:{
     info:[{
-      content: "Are you ready for this? I'm about to blow your mind."
+      content: "Are you ready for this? I am about to blow your mind."
     }],
     responses: [{
-      content: "I'm totally ready",
+      content: "I am totally ready",
       id: "realPlan"
     },{
-      content: "I'm not so sure...",
+      content: "I am not so sure...",
       id: "sideTrackrealPlan"
     }]
   },
   sideTrackrealPlan:{
     info:[{
-      content: "Eh. You'll be fine"
+      content: "Eh. You will be fine"
     }],
     responses:[{
       content: "ok. lets go",
@@ -370,18 +404,18 @@ var theWholeConversation = { //legit the whole entire thing its like 200 lines l
     },{
       content: "Each person will choose the right most important to them and lift it up"
     },{
-      content: "When you lift these flaps up, you will be able to see how many child soldiers don't have these rights."
+      content: "When you lift these flaps up, you will be able to see how many child soldiers do not have these rights."
     },{
-      content: "These posters will be strategically(randomly) placed around campus to maximize exposure. Shouldn't take long, we have 124 people"
+      content: "These posters will be strategically(randomly) placed around campus to maximize exposure. Should not take long, we have 124 people"
     }],
     responses:[{
-      content: "ohhhh. That's pretty cool",
+      content: "ohhhh. That is pretty cool",
       id: "youKnowThatsRight"
     }]
   },
   youKnowThatsRight:{
     info:[{
-      content: "Well, that's all I got for today. Feel free to check out the following websites:"
+      content: "Well, that is all I got for today. Feel free to check out the following websites:"
     },{
       content: "tags"
     }],
