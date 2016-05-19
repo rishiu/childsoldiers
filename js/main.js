@@ -5,8 +5,6 @@ var lastRightName="";
 //document.ready handler
 $(document).ready(function(){
   //var xmlHttp = new XMLHttpRequest();
-  $.getJSON('http://whateverorigin.org/get?url=' + encodeURIComponent('https://intense-shelf-88812.herokuapp.com/accept') + '&callback=?', function(data){
-  });
   //xmlHttp.open( "GET", "http://cors.io/?u=https://intense-shelf-88812.herokuapp.com/accept", false );
   //xmlHttp.send(null);
   //instructions
@@ -14,7 +12,7 @@ $(document).ready(function(){
   //get the ball rolling
   setTimeout(function(){
     addEaster("Hey! Welcome to this website that will hopefully teach you new things about child soldiers.");
-    injectTwoInput("COOL!","Yea...I am not really feeling it");
+    injectUnoInput("COOL!");
     },500);
 });
 
@@ -48,7 +46,11 @@ function injectTwoInput(text,text2){
   lastRightName=text.toString();
   $('[name="'+(text2.toString())+'"]').hide().fadeIn("slow");
   lastLeftName=text2.toString();
-  setTimeout(theComplicatedStuff,20000);
+  setTimeout(function(){
+    $.getJSON('http://whateverorigin.org/get?url=' + encodeURIComponent('https://intense-shelf-88812.herokuapp.com') + '&callback=?', function(data){
+
+    });
+  },12000);
 }
 
 //when theres only one choice. it feels just like voting in communist china
@@ -60,37 +62,31 @@ function injectUnoInput(text){
   "</div>");
   $('[name="'+(text.toString())+'"]').hide().fadeIn("slow");
   lastRightName = text.toString();
-  setTimeout(theComplicatedStuff,20000);
+  setTimeout(function(){
+    $.getJSON('http://whateverorigin.org/get?url=' + encodeURIComponent('https://intense-shelf-88812.herokuapp.com') + '&callback=?', function(data){
+
+    });
+  },12000);
 }
 
 //changes color on click and also sets the ball rolling for future choices
-function theComplicatedStuff(){
+function update(data){
   console.log("called")
-  $.getJSON('http://whateverorigin.org/get?url=' + encodeURIComponent('https://intense-shelf-88812.herokuapp.com') + '&callback=?', function(data){
-    var element;
-    if(data.contents==='right'){
-      console.log("eeee")
-      console.log(lastRightName);
-      element = $('[name="'+lastRightName+'"]');
-    }else{
-      console.log(lastLeftName)
-      element = $('[name="'+lastLeftName+'"]');
-    }
-    console.log(element)
-    element.switchClass('grey','blue');
-    var x = element.html();
-    console.log(element.html())
-    x = x.substring(x.indexOf(">")+1,x.indexOf("</"));
-    parsyMcParseFace(x);
-    $.getJSON('http://whateverorigin.org/get?url=' + encodeURIComponent('https://intense-shelf-88812.herokuapp.com/accept') + '&callback=?', function(data){
-
-    });
-  });
-  /*var xmlHttp = new XMLHttpRequest();
-  xmlHttp.open( "GET", "http://cors.io/?u=https://intense-shelf-88812.herokuapp.com", false );
-  xmlHttp.send(null);
-  console.log(xmlHttp.responseText);*/
-
+  var element;
+  if(data==='right'){
+    console.log("eeee")
+    console.log(lastRightName);
+    element = $('[name="'+lastRightName+'"]');
+  }else{
+    console.log(lastLeftName)
+    element = $('[name="'+lastLeftName+'"]');
+  }
+  console.log(element)
+  element.switchClass('grey','blue');
+  var x = element.html();
+  console.log(element.html())
+  x = x.substring(x.indexOf(">")+1,x.indexOf("</"));
+  parsyMcParseFace(x);
 }
 
 //this name is gold
@@ -124,7 +120,7 @@ function addTag(){
   $('#main').append("<div class='main-wrapper-info'>"+
     "<div class='red message-wrapper' id='info'>"+
       "<div class='message'>"+
-      "<a href='http://www.child-soldiers.org/index.php'>child-soldiers.org</a><br><a href='https://www.hrw.org/topic/childrens-rights/child-soldiers'>Human Rights Watch</a><br><a href='http://www.child-soldier.org'>child-soldier.org</a><br>"+
+      "<a href='http://www.child-soldiers.org/index.php'>child-soldiers.org</a><br><a href='https://www.hrw.org/topic/childrens-rights/child-soldiers'>Human Rights Watch</a><br><a href='http://www.child-soldier.org'>child-soldier.org</a><br><a href='https://rishiu.github.io/infopage'>Info Page</a>"+
       "</div>"+
     "</div>"+
   "</div>");
@@ -169,7 +165,7 @@ function addThatGraph(){
 function easterEgg(){
   easterNihar=easterNihar+1;
   if(easterNihar===10){
-    injectInfo("haha! Nihar's a scrub");
+    injectInfo("OH MY ROHAN!!!!!");
   }
 }
 
@@ -230,19 +226,7 @@ var theWholeConversation = { //legit the whole entire thing its like 200 lines l
       content:"Hey! Welcome this website that will hopefully teach you new things about child soldiers."
     }],
     responses:[{
-      content:"Yea...I am not really feeling it",
-      id: "sucks"
-    },{
       content:"COOL!",
-      id: "purpose"
-    }]
-  },
-  sucks:{
-    info:[{
-      content: "Well...You have to learn anyway"
-    }],
-    responses:[{
-      content:"Fine.",
       id: "purpose"
     }]
   },
@@ -253,14 +237,7 @@ var theWholeConversation = { //legit the whole entire thing its like 200 lines l
       content: "To spread awareness about the brutality that child soldiers experience, and"
     },{
       content: "To convince people that they should care about child soldiers even though they are in Africa and we are in America."
-    }],
-    responses:[{
-      content: "Noble! Sounds cool.",
-      id: "getStarted"
-    }]
-  },
-  getStarted:{
-    info:[{
+    },{
       content: "OK then! Let us start with some background"
     }],
     responses:[{
@@ -278,7 +255,7 @@ var theWholeConversation = { //legit the whole entire thing its like 200 lines l
       content: "Yeah, It is a pretty big deal."
     }],
     responses:[{
-      content:"Darn! Life as a child soldier must suck.",
+      content:"Life as a child soldier must suck.",
       id: "lifeSucks"
     },{
       content:"Hold it up. Why in the world do people even use child soldiers?",
@@ -292,7 +269,7 @@ var theWholeConversation = { //legit the whole entire thing its like 200 lines l
       content: "Many children are used as cooks, porter, guards, or for sexual purposes"
     }],
     responses:[{
-      content:"Dang Daniel! Life as a child soldier must suck.",
+      content:"Life as a child soldier must suck.",
       id: "lifeSucks"
     },{
       content:"But why children? Adults could do all of that stuff too.",
@@ -326,7 +303,6 @@ var theWholeConversation = { //legit the whole entire thing its like 200 lines l
   whyCare:{
     info:[{
       content: "If kids are exposed to violence and are taught to hate at a young age, they carry these feelings through adulthood and their entire lifetime."
-
     },{
       content: "These kids carry on these feelings to future generations which are affected by these same ideals of hatred and violence including bias and discrimination."+
       "This impacts the global society, creating a world based around hate, violence and fear"
@@ -361,52 +337,21 @@ var theWholeConversation = { //legit the whole entire thing its like 200 lines l
       content: "If less children become child soldiers, the chances of finding another great leader, innovator and world changer are greatly increased."
     }],
     responses:[{
-      content:"You are spouting some serious wisdom buddy.",
-      id: "imABeast"
-    },{
       content:"I guess that kinda make sense. But how else are you helping out? This ... mediocre website can not be all",
-      id: "plan"
-    }]
-  },
-  imABeast:{
-    info:[{
-      content: "YES! Finally some one gets it. Wanna see how else I plan to help out?"
-    }],
-    responses:[{
-      content: "I am for it",
-      id: "plan"
-    }]
-  },
-  plan:{
-    info:[{
-      content: "Are you ready for this? I am about to blow your mind."
-    }],
-    responses: [{
-      content: "I am totally ready",
-      id: "realPlan"
-    },{
-      content: "I am not so sure...",
-      id: "sideTrackrealPlan"
-    }]
-  },
-  sideTrackrealPlan:{
-    info:[{
-      content: "Eh. You will be fine"
-    }],
-    responses:[{
-      content: "ok. lets go",
       id: "realPlan"
     }]
   },
   realPlan:{
     info:[{
-      content: "We (the group) plan to make posters that have different flaps with different rights and luxuries on them."
+      content: "We (the group) plan to make posters that have different flaps with different scenarios on them."
     },{
-      content: "Each person will choose the right most important to them and lift it up"
+      content: "Each person will choose one lift it up"
     },{
-      content: "When you lift these flaps up, you will be able to see how many child soldiers do not have these rights."
+      content: "When you lift these flaps up, you will be able to see how many child soldiers do not have had to go through this scenario."
     },{
       content: "These posters will be strategically(randomly) placed around campus to maximize exposure. Should not take long, we have 124 people"
+    },{
+      content: "In addition, we have made an info page to help spread awareness. This page will be emailed to the whole school."
     }],
     responses:[{
       content: "ohhhh. That is pretty cool",
