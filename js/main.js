@@ -1,17 +1,12 @@
 var easterNihar=0;
-var lastLeftName="";
-var lastRightName="";
 
 //document.ready handler
 $(document).ready(function(){
-  //var xmlHttp = new XMLHttpRequest();
-  //xmlHttp.open( "GET", "http://cors.io/?u=https://intense-shelf-88812.herokuapp.com/accept", false );
-  //xmlHttp.send(null);
   //instructions
   window.confirm("To use this website, just act like its a chat application. Read the info on the left and choose your response on the right!")
   //get the ball rolling
   setTimeout(function(){
-    addEaster("Hey! Welcome to this website that will hopefully teach you new things about child soldiers.");
+    injectInfo("Hey! Welcome to this website that will hopefully teach you new things about child soldiers.");
     injectUnoInput("COOL!");
     },500);
 });
@@ -23,73 +18,48 @@ function injectInfo(text){
       "<div class='message'>"+(text.toString())+"</div>"+
     "</div>"+
   "</div>");
-  //idk why this is here it doesn't work anymore
   $('#info').addClass('fadeIn');
-  //a little slice of genius to make sure animations work
-  $('[name="'+(text.toString())+'"]').hide().fadeIn("slow");
+  $('[name="'+(text.toString())+'"]').hide().fadeIn("slow");  //add in animations for chat
 }
 
-//when theres two choices choices choices
+//when theres two choices
 function injectTwoInput(text,text2){
   $('#main').append("<div class='main-wrapper-user'>"+
     "<div class='main-message-wrapper' id='biggie'>"+
-      "<div class='grey message-wrapper' id='user' name='"+(text.toString())+"' >"+
+      "<div class='grey message-wrapper' id='user' name='"+(text.toString())+"' onClick='changeColor(this)'>"+
         "<div class='message'>"+(text.toString())+"</div>"+
       "</div>"+
-      "<div class='grey message-wrapper' id='user2' name='"+(text2.toString())+"' >"+
+      "<div class='grey message-wrapper' id='user2' name='"+(text2.toString())+"' onClick='changeColor(this)'>"+
         "<div class='message'>"+(text2.toString())+"</div>"+
       "</div>"+
     "</div>"+
   "</div>");
-  //more genius
   $('[name="'+(text.toString())+'"]').hide().fadeIn("slow");
   lastRightName=text.toString();
   $('[name="'+(text2.toString())+'"]').hide().fadeIn("slow");
   lastLeftName=text2.toString();
-  setTimeout(function(){
-    $.getJSON('http://whateverorigin.org/get?url=' + encodeURIComponent('https://intense-shelf-88812.herokuapp.com') + '&callback=?', function(data){
-
-    });
-  },12000);
 }
 
-//when theres only one choice. it feels just like voting in communist china
+//when theres only one choice
 function injectUnoInput(text){
   $('#main').append("<div class='main-wrapper-user'>"+
-      "<div class='grey message-wrapper fadeIn' name='"+(text.toString())+"' id='user' >"+
+      "<div class='grey message-wrapper fadeIn' name='"+(text.toString())+"' id='user' onClick='changeColor(this)'>"+
         "<div class='message'>"+(text.toString())+"</div>"+
       "</div>"+
   "</div>");
   $('[name="'+(text.toString())+'"]').hide().fadeIn("slow");
   lastRightName = text.toString();
-  setTimeout(function(){
-    $.getJSON('http://whateverorigin.org/get?url=' + encodeURIComponent('https://intense-shelf-88812.herokuapp.com') + '&callback=?', function(data){
-
-    });
-  },12000);
 }
 
-//changes color on click and also sets the ball rolling for future choices
-function update(data){
-  console.log("called")
-  var element;
-  if(data==='right'){
-    console.log("eeee")
-    console.log(lastRightName);
-    element = $('[name="'+lastRightName+'"]');
-  }else{
-    console.log(lastLeftName)
-    element = $('[name="'+lastLeftName+'"]');
+//change color of element upon click and process for next options
+function changeColor(element){
+    $(element).switchClass('grey','blue');
+    var x = element.innerHTML.toString();
+    x = x.substring(x.indexOf(">")+1,x.indexOf("</"));
+    parsyMcParseFace(x);
   }
-  console.log(element)
-  element.switchClass('grey','blue');
-  var x = element.html();
-  console.log(element.html())
-  x = x.substring(x.indexOf(">")+1,x.indexOf("</"));
-  parsyMcParseFace(x);
-}
 
-//this name is gold
+//parse the flow and decide what to show next
 function parsyMcParseFace(clickedStuff){
   var arr = Object.keys(theWholeConversation);
   var next = "";
@@ -116,16 +86,18 @@ function parsyMcParseFace(clickedStuff){
   dealWithTheseGodDamnTimeouts(info,input);
 }
 
+//for the last bit where links are provided
 function addTag(){
   $('#main').append("<div class='main-wrapper-info'>"+
     "<div class='red message-wrapper' id='info'>"+
       "<div class='message'>"+
-      "<a href='http://www.child-soldiers.org/index.php'>child-soldiers.org</a><br><a href='https://www.hrw.org/topic/childrens-rights/child-soldiers'>Human Rights Watch</a><br><a href='http://www.child-soldier.org'>child-soldier.org</a><br><a href='https://rishiu.github.io/infopage'>Info Page</a>"+
+      "<a href='http://www.child-soldiers.org/index.php'>child-soldiers.org</a><br><a href='https://www.hrw.org/topic/childrens-rights/child-soldiers'>Human Rights Watch</a><br><a href='http://www.child-soldier.org'>child-soldier.org</a>"+
       "</div>"+
     "</div>"+
   "</div>");
 }
 
+//for the graph. Uses Chart.JS
 function addThatGraph(){
   $('#main').append("<div class='main-wrapper-info'>"+
     "<div class='red message-wrapper' id='info'>"+
@@ -162,25 +134,7 @@ function addThatGraph(){
   },750);
 }
 
-function easterEgg(){
-  easterNihar=easterNihar+1;
-  if(easterNihar===10){
-    injectInfo("OH MY ROHAN!!!!!");
-  }
-}
-
-function addEaster(text){
-  $('#main').append("<div class='main-wrapper-info'>"+
-    "<div class='red message-wrapper' id='info'name='"+(text.toString())+"' onClick='easterEgg()'>"+
-      "<div class='message'>"+(text.toString())+"</div>"+
-    "</div>"+
-  "</div>");
-  //idk why this is here it doesn't work anymore
-  $('#info').addClass('fadeIn');
-  //a little slice of genius to make sure animations work
-  $('[name="'+(text.toString())+'"]').hide().fadeIn("slow");
-}
-
+//for the image
 function addThatImage(){
   $('#main').append("<div class='main-wrapper-info'>"+
     "<div class='red message-wrapper' id='info'>"+
@@ -189,7 +143,7 @@ function addThatImage(){
   "</div>");
 }
 
-//timeouts are a serious problem people. Open your eyes
+//add info,graphs,images,etc...
 function dealWithTheseGodDamnTimeouts(info,input){
   info.forEach(function(arrayElement){
     if(arrayElement==='graph here'){
@@ -210,6 +164,7 @@ function dealWithTheseGodDamnTimeouts(info,input){
       },750);
     }
   })
+  //offer choices after 1 sec.
   setTimeout(function(){
     if(input.length===2){
       injectTwoInput(input[0],input[1]);
@@ -220,7 +175,7 @@ function dealWithTheseGodDamnTimeouts(info,input){
   },1000);
 }
 
-var theWholeConversation = { //legit the whole entire thing its like 200 lines long
+var theWholeConversation = {
   initial: {
     info:[{
       content:"Hey! Welcome this website that will hopefully teach you new things about child soldiers."
@@ -308,11 +263,9 @@ var theWholeConversation = { //legit the whole entire thing its like 200 lines l
       "This impacts the global society, creating a world based around hate, violence and fear"
     },{
       content: "image"
-    },{
-      content: "(scroll up a little)"
     }],
     responses:[{
-      content: "But does not this just change the society in Africa? I am way over here in CPT man.",
+      content: "But does not this just change the society in Africa? I am way over here in US man.",
       id: "farAway"
     },{
       content: "I see what you mean. Do you have any examples?",
@@ -321,7 +274,7 @@ var theWholeConversation = { //legit the whole entire thing its like 200 lines l
   },
   farAway:{
     info:[{
-      content: "We were lucky to be born into an area like Cupertino, where are needs are catered too, we receive excellent education and we have enough money to live happily."
+      content: "We were lucky to be born into an area like US, where are needs are catered too, we receive excellent education and we have enough money to live happily."
     },{
       content: "However, some are not. Just because we were not on the short end of the straw does not mean it is not our responsibility to help out."
     }],
@@ -337,30 +290,13 @@ var theWholeConversation = { //legit the whole entire thing its like 200 lines l
       content: "If less children become child soldiers, the chances of finding another great leader, innovator and world changer are greatly increased."
     }],
     responses:[{
-      content:"I guess that kinda make sense. But how else are you helping out? This ... mediocre website can not be all",
-      id: "realPlan"
+      content:"I guess that kinda make sense. Is there anywhere I can learn more?",
+      id: "learnMore"
     }]
   },
-  realPlan:{
+  learnMore:{
     info:[{
-      content: "We (the group) plan to make posters that have different flaps with different scenarios on them."
-    },{
-      content: "Each person will choose one lift it up"
-    },{
-      content: "When you lift these flaps up, you will be able to see how many child soldiers do not have had to go through this scenario."
-    },{
-      content: "These posters will be strategically(randomly) placed around campus to maximize exposure. Should not take long, we have 124 people"
-    },{
-      content: "In addition, we have made an info page to help spread awareness. This page will be emailed to the whole school."
-    }],
-    responses:[{
-      content: "ohhhh. That is pretty cool",
-      id: "youKnowThatsRight"
-    }]
-  },
-  youKnowThatsRight:{
-    info:[{
-      content: "Well, that is all I got for today. Feel free to check out the following websites:"
+      content: "Of course there is. Take a look at the following links:"
     },{
       content: "tags"
     }],
